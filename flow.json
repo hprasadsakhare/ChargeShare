@@ -1,0 +1,37 @@
+{
+  "accounts": {
+    "emulator-account": {
+      "address": "0xf8d6e0586b0a20c7",
+      "key": ""
+    }
+  },
+  "contracts": {
+    "StationRegistry": {
+      "source": "./contracts/StationRegistry.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7"
+      }
+    },
+    "BookingEscrow": {
+      "source": "./contracts/BookingEscrow.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7"
+      }
+    },
+    "ReputationNFT": {
+      "source": "./contracts/ReputationNFT.cdc",
+      "aliases": {
+        "emulator": "0xf8d6e0586b0a20c7"
+      }
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": [
+        "StationRegistry",
+        "BookingEscrow",
+        "ReputationNFT"
+      ]
+    }
+  }
+}
