@@ -1,5 +1,4 @@
 #### Built on Flow
-[![Built on Flow](https://img.shields.io/badge/Built%20on-Flow-18D0C0?logo=flow&logoColor=white)](#)
 
 # ChargeShare — P2P EV Charging **Built on Flow** ⚡️
 
