@@ -32,6 +32,7 @@ export default function LeafletMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
       />
+      
       {stations.map((s) => {
         const [lat, lng] = s.location.split(",").map(Number);
         return (

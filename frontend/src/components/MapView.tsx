@@ -12,6 +12,8 @@ type Station = {
   available: boolean;
 };
 
+
+
 const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false });
 
 export default function MapView() {
