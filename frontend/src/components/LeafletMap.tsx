@@ -1,5 +1,5 @@
 "use client";
-import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 type Station = {
@@ -20,6 +20,12 @@ export default function LeafletMap({
   center: [number, number];
   zoom: number;
 }) {
+  // Ensure default marker icons load in Next.js
+  L.Icon.Default.mergeOptions({
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  });
   return (
     <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%", borderRadius: 12 }}>
       <TileLayer
