@@ -1,6 +1,6 @@
 "use client";
 import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 
 type Station = {
   id: number;
@@ -11,7 +11,7 @@ type Station = {
   available: boolean;
 };
 
-export default function LeafletMap({
+function MapCanvas({
   stations,
   center,
   zoom,
@@ -26,8 +26,16 @@ export default function LeafletMap({
     iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
     shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
   });
+
+  function MapController({ targetCenter, targetZoom }: { targetCenter: [number, number]; targetZoom: number }) {
+    const map = useMap();
+    // Recenter the map when props change
+    map.setView(targetCenter, targetZoom, { animate: true });
+    return null;
+  }
   return (
     <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%", borderRadius: 12 }}>
+      <MapController targetCenter={center} targetZoom={zoom} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -51,5 +59,7 @@ export default function LeafletMap({
     </MapContainer>
   );
 }
+
+export default MapCanvas;
 
 
