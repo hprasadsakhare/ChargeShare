@@ -9,19 +9,41 @@ const WC_PROJECT_ID = process.env.NEXT_PUBLIC_WC_PROJECT_ID || "";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 // Initialize WalletConnect if project ID is provided
-if (WC_PROJECT_ID) {
-  init({
-    projectId: WC_PROJECT_ID,
-    metadata: {
-      name: APP_TITLE,
-      description: "ChargeShare - EV Charging Station Sharing Platform",
-      url: APP_URL,
-      icons: [APP_ICON],
-    },
-  }).then(({ FclWcServicePlugin }) => {
+const initializeWalletConnect = async () => {
+  if (!WC_PROJECT_ID) {
+    console.warn(`
+[FCL WalletConnect Service Plugin]
+============================
+WalletConnect project ID not found. Some wallets may not work properly.
+To fix this:
+1. Get a project ID from: https://cloud.walletconnect.com
+2. Add NEXT_PUBLIC_WC_PROJECT_ID=your_project_id to your .env.local file
+3. Restart the development server
+============================
+    `);
+    return;
+  }
+
+  try {
+    const { FclWcServicePlugin } = await init({
+      projectId: WC_PROJECT_ID,
+      metadata: {
+        name: APP_TITLE,
+        description: "ChargeShare - EV Charging Station Sharing Platform",
+        url: APP_URL,
+        icons: [APP_ICON],
+      },
+    });
+    
     fcl.pluginRegistry.add(FclWcServicePlugin);
-  });
-}
+    console.log("WalletConnect Service Plugin initialized successfully");
+  } catch (error) {
+    console.error("Failed to initialize WalletConnect Service Plugin:", error);
+  }
+};
+
+// Initialize WalletConnect
+initializeWalletConnect();
 
 fcl.config()
   .put("app.detail.title", APP_TITLE)
