@@ -96,6 +96,7 @@ NEXT_PUBLIC_FLOW_ACCESS_NODE=https://rest-testnet.onflow.org
 NEXT_PUBLIC_FLOW_WALLET_DISCOVERY=https://fcl-discovery.onflow.org/testnet/authn
 NEXT_PUBLIC_APP_TITLE=ChargeShare
 NEXT_PUBLIC_APP_ICON=https://placehold.co/64x64
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_WC_PROJECT_ID=your_walletconnect_project_id
 
 # Deployed contract addresses (replace with yours)
@@ -107,6 +108,15 @@ NEXT_PUBLIC_REPUTATION_NFT=0xREPUTATION
 NEXT_PUBLIC_FT_ADDRESS=0x9a0766d93b6608b7
 NEXT_PUBLIC_NFT_ADDRESS=0x631e88ae7f1d7c20
 ```
+
+### WalletConnect Setup (Required)
+**Important**: You must register for a WalletConnect project ID to ensure wallet compatibility. Without this, users will be unable to use certain wallets to interact with your dApp.
+
+1. **Get your Project ID**: Visit [https://cloud.walletconnect.com](https://cloud.walletconnect.com) and create a new project
+2. **Add to environment**: Replace `your_walletconnect_project_id` with your actual project ID
+3. **See detailed setup**: Check `WALLETCONNECT_SETUP.md` for complete instructions
+
+The dApp now uses the latest FCL WalletConnect Service Plugin for enhanced wallet compatibility.
 
 ## Run the Dapp
 ```bash
@@ -138,7 +148,8 @@ Then open `http://localhost:3000` (or the port printed in the console).
 
 ## Troubleshooting
 - **Cadence import error** `0xDeployer`: set proper addresses in `.env.local` and restart `npm run dev`.
-- **WalletConnect notice**: set `NEXT_PUBLIC_WC_PROJECT_ID` to your project ID.
+- **WalletConnect notice**: set `NEXT_PUBLIC_WC_PROJECT_ID` to your project ID from [WalletConnect Cloud](https://cloud.walletconnect.com).
+- **Wallet connection issues**: ensure your WalletConnect project ID is valid and your dApp URL matches the registered URL.
 - **Leaflet SSR error**: the map is loaded client-side only; ensure no SSR usage of `window`.
 - **Hydration mismatch**: try a hard refresh or disable extensions that inject attributes; we set `suppressHydrationWarning`.
 
