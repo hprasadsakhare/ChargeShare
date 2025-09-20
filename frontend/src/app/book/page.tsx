@@ -68,24 +68,24 @@ export default function BookPage() {
     <div className="min-h-[70vh] flex items-center justify-center">
       <div className="w-full max-w-5xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10 space-y-3">
+        <div className="text-center mb-10 space-y-3 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-100 to-indigo-100 text-emerald-700 text-sm font-medium">
             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             Secure booking via smart contracts
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600">
+          <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 animate-slide-up">
             Book a Charging Session
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">Lock funds in escrow and start charging. When your session completes, funds are released instantly.</p>
+          <p className="text-gray-600 max-w-2xl mx-auto animate-slide-up" style={{animationDelay: '0.2s'}}>Lock funds in escrow and start charging. When your session completes, funds are released instantly.</p>
         </div>
 
         {/* Content Grid */}
         <div className="grid md:grid-cols-5 gap-6">
           {/* Left: Booking Form */}
           <div className="md:col-span-3">
-            <div className="rounded-3xl p-6 md:p-8 border-2 border-emerald-100 shadow-lg bg-gradient-to-br from-emerald-50 to-white">
+            <div className="rounded-3xl p-6 md:p-8 border-2 border-emerald-100 shadow-lg bg-gradient-to-br from-emerald-50 to-white hover-lift card-hover animate-slide-left">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center text-xl">⚡</div>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center text-xl animate-float">⚡</div>
                 <h2 className="text-xl font-bold text-emerald-700">Lock Funds</h2>
               </div>
               <form className="space-y-5" onSubmit={lockFunds}>
@@ -111,10 +111,17 @@ export default function BookPage() {
                   <p className="text-xs text-gray-500 mt-1">Use UFix64 format with exactly one decimal point (e.g., 10.0, 15.5).</p>
                 </div>
                 <button
-                  className="w-full px-4 py-3 rounded-xl border-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white border-emerald-600 hover:from-emerald-700 hover:to-emerald-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg"
+                  className="w-full px-4 py-3 rounded-xl border-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white border-emerald-600 hover:from-emerald-700 hover:to-emerald-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg btn-primary hover-lift"
                   type="submit"
                 >
-                  Lock Funds & Start
+                  {status === "Locking funds..." ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="spinner"></div>
+                      Locking funds...
+                    </div>
+                  ) : (
+                    "Lock Funds & Start"
+                  )}
                 </button>
               </form>
             </div>

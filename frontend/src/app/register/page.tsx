@@ -42,23 +42,23 @@ export default function RegisterPage() {
     <div className="min-h-[70vh] flex items-center justify-center">
       <div className="w-full max-w-5xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10 space-y-3">
+        <div className="text-center mb-10 space-y-3 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-100 to-emerald-100 text-indigo-700 text-sm font-medium">
             <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
             Earn by sharing your charger
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600">
+          <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 animate-slide-up">
             Register Your Charging Station
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">List your charger with pricing and availability. Drivers can find and book instantly—payments are secured by smart contracts.</p>
+          <p className="text-gray-600 max-w-2xl mx-auto animate-slide-up" style={{animationDelay: '0.2s'}}>List your charger with pricing and availability. Drivers can find and book instantly—payments are secured by smart contracts.</p>
         </div>
 
         {/* Card */}
         <div className="grid md:grid-cols-5 gap-6">
           <div className="md:col-span-3">
-            <div className="rounded-3xl p-6 md:p-8 border-2 border-indigo-100 shadow-lg bg-gradient-to-br from-indigo-50 to-white">
+            <div className="rounded-3xl p-6 md:p-8 border-2 border-indigo-100 shadow-lg bg-gradient-to-br from-indigo-50 to-white hover-lift card-hover animate-slide-left">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-xl">🔌</div>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-xl animate-float">🔌</div>
                 <h2 className="text-xl font-bold text-indigo-700">Station Details</h2>
               </div>
               <form onSubmit={onSubmit} className="space-y-5">
@@ -103,19 +103,26 @@ export default function RegisterPage() {
                   <span className="text-sm text-gray-700">Available for booking</span>
                 </label>
                 <button
-                  className="w-full px-4 py-3 rounded-xl border-2 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white border-indigo-600 hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg"
+                  className="w-full px-4 py-3 rounded-xl border-2 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white border-indigo-600 hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 font-semibold shadow-md hover:shadow-lg btn-primary hover-lift"
                   type="submit"
                 >
-                  Register Station
+                  {status === "Submitting..." ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="spinner"></div>
+                      Submitting...
+                    </div>
+                  ) : (
+                    "Register Station"
+                  )}
                 </button>
               </form>
             </div>
           </div>
 
           <div className="md:col-span-2">
-            <div className="rounded-3xl p-6 md:p-8 border-2 border-emerald-100 shadow-lg bg-gradient-to-br from-emerald-50 to-white">
+            <div className="rounded-3xl p-6 md:p-8 border-2 border-emerald-100 shadow-lg bg-gradient-to-br from-emerald-50 to-white hover-lift card-hover animate-slide-right">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center text-xl">📍</div>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center text-xl animate-float" style={{animationDelay: '1s'}}>📍</div>
                 <h3 className="text-lg font-bold text-emerald-700">Tips for Better Visibility</h3>
               </div>
               <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
