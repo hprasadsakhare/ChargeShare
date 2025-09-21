@@ -8,5 +8,6 @@ export default function FCLProvider({ children }: { children: React.ReactNode })
     // This component ensures FCL is only initialized on the client side
   }, []);
 
+  
   return <>{children}</>;
 }
