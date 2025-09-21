@@ -192,36 +192,82 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Users Say</h2>
-          <p className="text-lg text-gray-600">Real stories from the ChargeShare community</p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <TestimonialCard
-            name="Priya Sharma"
-            role="EV Owner, Mumbai"
-            content="ChargeShare has revolutionized my daily commute. I can find affordable charging stations anywhere in the city, and the payments are instant and secure."
-            avatar="P"
-            rating={5}
-            delay={0}
-          />
-          <TestimonialCard
-            name="Rajesh Kumar"
-            role="Station Owner, Delhi"
-            content="I've been earning ₹15,000+ monthly by sharing my home charger. The smart contracts handle everything automatically - no hassle, just profit!"
-            avatar="R"
-            rating={5}
-            delay={200}
-          />
-          <TestimonialCard
-            name="Anita Patel"
-            role="Fleet Manager, Bangalore"
-            content="The reputation system is brilliant. We only book stations with high ratings, ensuring reliable charging for our entire fleet."
-            avatar="A"
-            rating={5}
-            delay={400}
-          />
+      <section className="relative max-w-6xl mx-auto overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-emerald-50 opacity-50"></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-float"></div>
+        <div className="absolute bottom-10 right-10 w-24 h-24 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-float" style={{animationDelay: '4s'}}></div>
+        
+        <div className="relative z-10">
+          {/* Enhanced header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">💬</span>
+              </div>
+              <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600">
+                What Our Users Say
+              </h2>
+            </div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Real stories from the <span className="font-semibold text-indigo-600">ChargeShare</span> community
+            </p>
+            
+            {/* Stats bar */}
+            <div className="mt-8 flex justify-center items-center space-x-8 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span>4.9/5 Average Rating</span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
+                <span>10,000+ Happy Users</span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></div>
+                <span>99% Satisfaction</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced testimonials grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <TestimonialCard
+              name="Priya Sharma"
+              role="EV Owner, Mumbai"
+              content="ChargeShare has revolutionized my daily commute. I can find affordable charging stations anywhere in the city, and the payments are instant and secure."
+              avatar="P"
+              rating={5}
+              delay={0}
+            />
+            <TestimonialCard
+              name="Rajesh Kumar"
+              role="Station Owner, Delhi"
+              content="I've been earning ₹15,000+ monthly by sharing my home charger. The smart contracts handle everything automatically - no hassle, just profit!"
+              avatar="R"
+              rating={5}
+              delay={200}
+            />
+            <TestimonialCard
+              name="Anita Patel"
+              role="Fleet Manager, Bangalore"
+              content="The reputation system is brilliant. We only book stations with high ratings, ensuring reliable charging for our entire fleet."
+              avatar="A"
+              rating={5}
+              delay={400}
+            />
+          </div>
+
+          {/* Call to action */}
+          <div className="mt-16 text-center">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-500 to-emerald-500 text-white rounded-2xl hover:from-indigo-600 hover:to-emerald-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25 cursor-pointer">
+              <span className="text-lg font-semibold">Join Our Community</span>
+              <span className="text-2xl">→</span>
+            </div>
+          </div>
         </div>
       </section>
 
