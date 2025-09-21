@@ -24,13 +24,39 @@ export const metadata: Metadata = {
 
 function Header() {
   return (
-    <header className="flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-indigo-50 via-emerald-50 to-pink-50">
-      <div className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 tracking-tight text-lg">
-        ChargeShare <span className="align-middle">⚡</span>
+    <header className="header-container relative flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-indigo-50 via-emerald-50 to-pink-50 overflow-hidden animate-header-glow">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-1/4 w-16 h-16 bg-indigo-300 rounded-full mix-blend-multiply filter blur-sm animate-float"></div>
+        <div className="absolute bottom-0 right-1/4 w-12 h-12 bg-emerald-300 rounded-full mix-blend-multiply filter blur-sm animate-float" style={{animationDelay: '1.5s'}}></div>
+        <div className="absolute top-1/2 left-1/2 w-8 h-8 bg-pink-300 rounded-full mix-blend-multiply filter blur-sm animate-float" style={{animationDelay: '3s'}}></div>
       </div>
-      <Suspense>
-        <WalletButtons />
-      </Suspense>
+      
+      {/* Interactive Logo */}
+      <div className="relative z-10">
+        <div className="header-logo group">
+          <div className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 tracking-tight text-lg animate-gradient-shift-logo transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg">
+            ChargeShare 
+            <span className="logo-lightning align-middle text-2xl transition-all duration-300 group-hover:animate-pulse group-hover:drop-shadow-lg group-hover:text-yellow-400">
+              ⚡
+            </span>
+          </div>
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-emerald-400 to-pink-400 tracking-tight text-lg opacity-0 group-hover:opacity-30 group-hover:blur-sm transition-all duration-300">
+            ChargeShare 
+            <span className="align-middle text-2xl">⚡</span>
+          </div>
+          {/* Click ripple effect */}
+          <div className="absolute inset-0 rounded-full opacity-0 group-active:opacity-20 group-active:bg-gradient-to-r group-active:from-indigo-200 group-active:to-pink-200 group-active:animate-ping"></div>
+        </div>
+      </div>
+      
+      {/* Interactive Wallet Buttons Container */}
+      <div className="relative z-10">
+        <Suspense>
+          <WalletButtons />
+        </Suspense>
+      </div>
     </header>
   );
 }
