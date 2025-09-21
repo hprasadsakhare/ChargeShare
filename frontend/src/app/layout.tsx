@@ -4,6 +4,9 @@ import "./globals.css";
 import { Suspense } from "react";
 import WalletButtons from "@/components/WalletButtons";
 import FCLProvider from "@/components/FCLProvider";
+import NotificationSystem from "@/components/NotificationSystem";
+import FloatingActionButton from "@/components/FloatingActionButton";
+import StatusIndicator from "@/components/StatusIndicator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +21,27 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "ChargeShare",
-  description: "P2P EV Charging on Flow",
+  title: "ChargeShare - P2P EV Charging on Flow",
+  description: "Decentralized peer-to-peer EV charging platform. Find charging stations, register your own, and earn with secure blockchain payments.",
+  manifest: "/manifest.json",
+  themeColor: "#4f46e5",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "ChargeShare",
+  },
+  openGraph: {
+    title: "ChargeShare - P2P EV Charging on Flow",
+    description: "Decentralized peer-to-peer EV charging platform",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ChargeShare - P2P EV Charging on Flow",
+    description: "Decentralized peer-to-peer EV charging platform",
+  },
 };
 
 function Header() {
@@ -51,11 +73,28 @@ function Header() {
         </div>
       </div>
       
-      {/* Interactive Wallet Buttons Container */}
-      <div className="relative z-10">
-        <Suspense>
-          <WalletButtons />
-        </Suspense>
+      {/* Navigation and Wallet */}
+      <div className="relative z-10 flex items-center gap-6">
+        <nav className="hidden md:flex items-center space-x-4">
+          <a href="/dashboard" className="text-gray-700 hover:text-indigo-600 transition-colors font-medium">
+            Dashboard
+          </a>
+          <a href="/register" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
+            Register
+          </a>
+          <a href="/book" className="text-gray-700 hover:text-pink-600 transition-colors font-medium">
+            Book
+          </a>
+        </nav>
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:block">
+            <StatusIndicator status="online" />
+          </div>
+          <NotificationSystem />
+          <Suspense>
+            <WalletButtons />
+          </Suspense>
+        </div>
       </div>
     </header>
   );
@@ -84,6 +123,9 @@ function Footer() {
           
           {/* Interactive navigation links */}
           <div className="flex items-center space-x-6">
+            <a href="/dashboard" className="footer-link text-slate-300 hover:text-indigo-400 transition-all duration-300 text-sm hover:scale-110 transform hover:shadow-lg hover:shadow-indigo-400/20 px-3 py-1 rounded-md">
+              Dashboard
+            </a>
             <a href="/register" className="footer-link text-slate-300 hover:text-emerald-400 transition-all duration-300 text-sm hover:scale-110 transform hover:shadow-lg hover:shadow-emerald-400/20 px-3 py-1 rounded-md">
               Register
             </a>
@@ -152,6 +194,7 @@ export default function RootLayout({
           <Header />
           <main className="p-4">{children}</main>
           <Footer />
+          <FloatingActionButton />
         </FCLProvider>
       </body>
     </html>
