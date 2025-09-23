@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
+import Link from "next/link";
 import WalletButtons from "@/components/WalletButtons";
 import FCLProvider from "@/components/FCLProvider";
 import NotificationSystem from "@/components/NotificationSystem";
@@ -56,7 +57,7 @@ function Header() {
       
       {/* Interactive Logo */}
       <div className="relative z-10">
-        <div className="header-logo group">
+        <Link href="/" className="header-logo group block">
           <div className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 tracking-tight text-lg animate-gradient-shift-logo transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg">
             ChargeShare 
             <span className="logo-lightning align-middle text-2xl transition-all duration-300 group-hover:animate-pulse group-hover:drop-shadow-lg group-hover:text-yellow-400">
@@ -70,7 +71,7 @@ function Header() {
           </div>
           {/* Click ripple effect */}
           <div className="absolute inset-0 rounded-full opacity-0 group-active:opacity-20 group-active:bg-gradient-to-r group-active:from-indigo-200 group-active:to-pink-200 group-active:animate-ping"></div>
-        </div>
+        </Link>
       </div>
       
       {/* Navigation and Wallet */}
@@ -113,9 +114,9 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Logo and description - compact */}
           <div className="flex items-center space-x-4">
-            <div className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-emerald-400 to-pink-400 tracking-tight text-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
+            <Link href="/" className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-emerald-400 to-pink-400 tracking-tight text-lg hover:scale-105 transition-transform duration-300 cursor-pointer">
               ChargeShare <span className="align-middle animate-pulse">⚡</span>
-            </div>
+            </Link>
             <p className="text-slate-300 text-xs hidden sm:block">
               P2P EV Charging on Flow
             </p>

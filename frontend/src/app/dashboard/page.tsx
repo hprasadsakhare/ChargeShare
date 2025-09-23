@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import fcl from "@/lib/fcl";
 import AnalyticsDashboard from "@/components/AnalyticsDashboard";
 import ReputationDisplay from "@/components/ReputationDisplay";
@@ -37,7 +37,7 @@ type ReputationData = {
 };
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{addr?: string} | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'stations' | 'bookings' | 'reputation'>('overview');
   const [stations, setStations] = useState<Station[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -50,9 +50,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadUserData();
-  }, [user?.addr]);
+  }, [user?.addr, loadUserData]);
 
-  const loadUserData = async () => {
+  const loadUserData = useCallback(async () => {
     setLoading(true);
     try {
       await Promise.all([
@@ -65,7 +65,7 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const loadStations = async () => {
     if (!user?.addr) {
@@ -84,17 +84,27 @@ export default function Dashboard() {
     try {
       const data = await fcl.query({
         cadence,
-        args: (arg: any, t: any) => [arg(user?.addr, t.Address)]
+        args: (arg: (value: unknown, type: unknown) => unknown, t: unknown) => [arg(user?.addr, t)]
       });
       
-      const parsedStations: Station[] = (data || []).map((s: any) => ({
-        id: Number(s.id),
-        owner: s.owner,
-        location: s.location,
-        chargerType: s.chargerType,
-        costPerKWh: String(s.costPerKWh),
-        available: Boolean(s.available),
-      }));
+      const parsedStations: Station[] = (data || []).map((s: unknown) => {
+        const station = s as {
+          id: string;
+          owner: string;
+          location: string;
+          chargerType: string;
+          costPerKWh: string;
+          available: boolean;
+        };
+        return {
+          id: Number(station.id),
+          owner: station.owner,
+          location: station.location,
+          chargerType: station.chargerType,
+          costPerKWh: String(station.costPerKWh),
+          available: Boolean(station.available),
+        };
+      });
       setStations(parsedStations);
     } catch (error) {
       console.error('Error loading stations:', error);
@@ -136,9 +146,9 @@ export default function Dashboard() {
             }
           }
         `,
-        args: (arg: any, t: any) => [
-          arg(stationId, t.UInt64),
-          arg(!currentStatus, t.Bool)
+        args: (arg: (value: unknown, type: unknown) => unknown, t: unknown) => [
+          arg(stationId, t),
+          arg(!currentStatus, t)
         ],
         limit: 100,
       });
@@ -247,7 +257,7 @@ export default function Dashboard() {
         ].map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => setActiveTab(tab.id as 'overview' | 'stations' | 'bookings' | 'reputation')}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-all duration-200 ${
               activeTab === tab.id
                 ? 'bg-white text-indigo-600 shadow-sm'
