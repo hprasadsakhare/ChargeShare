@@ -49,9 +49,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (user?.addr) {
-      loadUserData();
-    }
+    loadUserData();
   }, [user?.addr]);
 
   const loadUserData = async () => {
@@ -70,6 +68,11 @@ export default function Dashboard() {
   };
 
   const loadStations = async () => {
+    if (!user?.addr) {
+      setStations([]);
+      return;
+    }
+
     const REG = process.env.NEXT_PUBLIC_STATION_REGISTRY || "0xDeployer";
     const cadence = `
       import StationRegistry from ${REG}
@@ -95,6 +98,7 @@ export default function Dashboard() {
       setStations(parsedStations);
     } catch (error) {
       console.error('Error loading stations:', error);
+      setStations([]);
     }
   };
 
@@ -116,6 +120,11 @@ export default function Dashboard() {
   };
 
   const toggleStationAvailability = async (stationId: number, currentStatus: boolean) => {
+    if (!user?.addr) {
+      console.log('Please connect your wallet to update station availability');
+      return;
+    }
+
     try {
       const REG = process.env.NEXT_PUBLIC_STATION_REGISTRY || "0xDeployer";
       const txId = await fcl.mutate({
@@ -140,19 +149,6 @@ export default function Dashboard() {
     }
   };
 
-  if (!user?.addr) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
-            🔐
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Wallet</h2>
-          <p className="text-gray-600 mb-6">Please connect your wallet to access your dashboard</p>
-        </div>
-      </div>
-    );
-  }
 
   if (loading) {
     return (
@@ -169,10 +165,25 @@ export default function Dashboard() {
     <div className="min-h-[70vh] max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 mb-2">
-          Dashboard
-        </h1>
-        <p className="text-gray-600">Manage your stations, bookings, and reputation</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-emerald-600 to-pink-600 mb-2">
+              Dashboard
+            </h1>
+            <p className="text-gray-600">Manage your stations, bookings, and reputation</p>
+          </div>
+          {user?.addr ? (
+            <div className="text-right">
+              <p className="text-sm text-gray-500">Connected</p>
+              <p className="text-xs font-mono text-gray-400">{user.addr.slice(0, 6)}...{user.addr.slice(-4)}</p>
+            </div>
+          ) : (
+            <div className="text-right">
+              <p className="text-sm text-amber-600">Wallet not connected</p>
+              <p className="text-xs text-gray-500">Some features may be limited</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -263,7 +274,15 @@ export default function Dashboard() {
               <div className="bg-gradient-to-r from-emerald-50 to-indigo-50 rounded-xl p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="space-y-3">
-                  <a href="/register" className="block w-full px-4 py-3 bg-indigo-600 text-white rounded-lg text-center hover:bg-indigo-700 transition-colors">
+                  <a 
+                    href={user?.addr ? "/register" : "#"} 
+                    className={`block w-full px-4 py-3 rounded-lg text-center transition-colors ${
+                      user?.addr 
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-700' 
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                    onClick={!user?.addr ? (e) => e.preventDefault() : undefined}
+                  >
                     Register New Station
                   </a>
                   <a href="/book" className="block w-full px-4 py-3 bg-emerald-600 text-white rounded-lg text-center hover:bg-emerald-700 transition-colors">
@@ -297,12 +316,29 @@ export default function Dashboard() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">My Stations</h2>
-              <a href="/register" className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+              <a 
+                href={user?.addr ? "/register" : "#"} 
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  user?.addr 
+                    ? 'bg-indigo-600 text-white hover:bg-indigo-700' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                onClick={!user?.addr ? (e) => e.preventDefault() : undefined}
+              >
                 Add Station
               </a>
             </div>
 
-            {stations.length === 0 ? (
+            {!user?.addr ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔐</span>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Connect your wallet</h3>
+                <p className="text-gray-600 mb-4">Connect your wallet to view and manage your charging stations</p>
+                <p className="text-sm text-gray-500">You can still browse and book stations without connecting</p>
+              </div>
+            ) : stations.length === 0 ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🔌</span>
