@@ -169,6 +169,6 @@ Then open `http://localhost:3000` (or the port printed in the console).
 ## License
 MIT
 
----
+------
 
 **Built on Flow** - Powering the future of decentralized EV charging
